@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Music.h"
 
 Music::Music() : music(nullptr)
