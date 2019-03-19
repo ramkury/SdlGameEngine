@@ -6,14 +6,19 @@ public:
 	Vec2(float x, float y);
 	float x, y;
 
-	Vec2 operator+(const Vec2& rhs);
-	Vec2 operator-(const Vec2& rhs);
-	Vec2 operator*(float scalar);
+	// Unary operators
+	Vec2 operator-() const;
 
-	float Abs();
-	Vec2 Norm();
-	float Distance(Vec2& other);
-	float Angle();
-	Vec2 Rotate(float degrees);
+	// Binary operators
+	Vec2 operator+(const Vec2& rhs) const;
+	Vec2 operator-(const Vec2& rhs) const;
+	Vec2 operator*(float scalar) const;
+
+	// Methods
+	float Abs() const;
+	Vec2 Norm() const;
+	float Distance(Vec2& other) const;
+	float Angle() const;
+	Vec2 Rotate(float degrees) const;
 };
 

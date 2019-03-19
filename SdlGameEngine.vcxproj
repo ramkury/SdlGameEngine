@@ -25,6 +25,7 @@
     <ClCompile Include="src\Rect.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\State.cpp" />
+    <ClCompile Include="src\Utils.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="include\Rect.h" />
     <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\State.h" />
+    <ClInclude Include="include\Utils.h" />
     <ClInclude Include="include\Vec2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
