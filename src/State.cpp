@@ -2,9 +2,11 @@
 #include "SDL.h"
 
 State::State() :
-	bg(Sprite("resources/img/ocean.jpg")),
-	quitRequested(false)
+	bg("resources/img/ocean.jpg"),
+	quitRequested(false),
+	music("resources/audio/stageState.ogg")
 {
+	music.Play();
 }
 
 bool State::QuitRequested()

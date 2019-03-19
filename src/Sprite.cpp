@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Sprite.h"
 #include "SDL_image.h"
 #include "Game.h"
@@ -34,10 +35,15 @@ void Sprite::Open(std::string file)
 
 	if (texture == nullptr)
 	{
-		throw std::runtime_error(std::string("Could not load texture ") + file + ". Error: " + SDL_GetError());
+		throw std::runtime_error("Could not load texture " + file + ". Error: " + SDL_GetError());
 	}
 
-	int result = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+	int error = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+	if (error)
+	{
+		throw std::runtime_error("Could not query texture " + file);
+	}
+
 	SetClip(0, 0, width, height);
 }
 

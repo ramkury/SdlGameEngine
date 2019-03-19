@@ -25,7 +25,7 @@ Game::Game(std::string title, int width, int height)
 	res = Mix_Init(MIX_INIT_OGG);
 	std::cout << "Mix_Init returned " << res << std::endl;
 
-	Mix_OpenAudio(MIX_DEFAULT_CHANNELS, MIX_DEFAULT_FORMAT, 2, 1024);
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
 	std::cout << "Mix_OpenAudio returned " << res << std::endl;
 
 	Mix_AllocateChannels(32);
@@ -66,7 +66,7 @@ Game& Game::GetInstance()
 {
 	if (instance == nullptr)
 	{
-		new Game("My game", 1024, 600);
+		new Game("Ricardo Kury - 14/0161082", 1024, 600);
 	}
 	return *instance;
 }
