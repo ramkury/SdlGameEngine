@@ -16,7 +16,7 @@ Game::Game(std::string title, int width, int height)
 	}
 	instance = this;
 
-	// Seeding number generator
+	// Seeding random number generator
 	srand(time(NULL));
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER))
