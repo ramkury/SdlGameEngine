@@ -2,17 +2,22 @@
 #include "SDL_image.h"
 #include "SDL_mixer.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 Game* Game::instance = nullptr;
 
 Game::Game(std::string title, int width, int height)
 {
+	// Singleton
 	if (instance != nullptr)
 	{
 		throw std::logic_error("Trying to create more than one instances of a singleton (Game)");
 	}
-
 	instance = this;
+
+	// Seeding number generator
+	srand(time(NULL));
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER))
 	{

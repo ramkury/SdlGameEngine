@@ -10,10 +10,11 @@ public:
 
 	// Binary operators
 	float operator-(const Rect& rhs) const;
-	bool operator[](const Vec2& point) const;
 	Rect operator+(const Vec2& vec) const;
 	Rect operator-(const Vec2& vec) const;
 	
 	// Methods
+	bool Contains(const Vec2& point) const;
 	Vec2 Center() const;
+	void CenterAt(int cx, int cy);
 };
