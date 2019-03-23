@@ -1,5 +1,5 @@
 #include "State.h"
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 State::State() :
 	bg("resources/img/ocean.jpg"),
