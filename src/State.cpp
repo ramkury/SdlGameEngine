@@ -2,9 +2,9 @@
 #include "SDL2/SDL.h"
 
 State::State() :
-	bg("resources/img/ocean.jpg"),
+	bg("assets/img/ocean.jpg"),
 	quitRequested(false),
-	music("resources/audio/stageState.ogg")
+	music("assets/audio/stageState.ogg")
 {
 	music.Play();
 }
