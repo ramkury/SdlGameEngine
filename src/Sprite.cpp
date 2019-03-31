@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include "Sprite.h"
-#include "SDL_image.h"
+#include "SDL2/SDL_image.h"
 #include "Game.h"
 
 Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr)

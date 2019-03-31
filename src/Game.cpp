@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "SDL_image.h"
-#include "SDL_mixer.h"
+#include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -21,7 +21,7 @@ Game::Game(std::string title, int width, int height)
 
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER))
 	{
-		throw std::runtime_error(std::string("SDL_Init error. Code: ") + SDL_GetError());
+		throw std::runtime_error(std::string("SDL2/SDL_Init error. Code: ") + SDL_GetError());
 	}
 
 	int res = IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);

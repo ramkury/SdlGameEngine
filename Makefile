@@ -6,7 +6,7 @@ RUN = ./
 
 DEP_FLAGS = -MT $@ -MMD -MP -MF $(DEP_PATH)/$*.d
 
-DIRECTIVES = -std=c++14 -Wall -Wextra -c -I $(HEADER_PATH) -I /usr/include/SDL2
+DIRECTIVES = -std=c++11 -Wall -Wextra -c -I $(HEADER_PATH)
 
 LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 

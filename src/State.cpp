@@ -1,14 +1,14 @@
 #include "State.h"
-#include "SDL.h"
+#include "SDL2/SDL.h"
 #include "Face.h"
 #include "Sound.h"
 
 State::State() :
 	quitRequested(false),
-	music("resources/audio/stageState.ogg")
+	music("assets/audio/stageState.ogg")
 {
 	auto background = new GameObject();
-	background->AddComponent(new Sprite(*background, "resources/img/ocean.jpg"));
+	background->AddComponent(new Sprite(*background, "assets/img/ocean.jpg"));
 	objectArray.emplace_back(background);
 	music.Play();
 }
@@ -107,9 +107,9 @@ void State::Input() {
 void State::AddObject(int mouseX, int mouseY)
 {
 	auto go = new GameObject();
-	go->AddComponent(new Sprite(*go, "resources/img/penguinface.png"));
+	go->AddComponent(new Sprite(*go, "assets/img/penguinface.png"));
 	go->Box.CenterAt(mouseX, mouseY);
-	go->AddComponent(new Sound(*go, "resources/audio/boom.wav"));
+	go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
 	go->AddComponent(new Face(*go));
 	objectArray.emplace_back(go);
 }
