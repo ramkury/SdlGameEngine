@@ -2,9 +2,9 @@
 #include "SDL2/SDL.h"
 #include "Face.h"
 #include "Sound.h"
+#include "Sprite.h"
 
 State::State() :
-	quitRequested(false),
 	music("assets/audio/stageState.ogg")
 {
 	auto background = new GameObject();

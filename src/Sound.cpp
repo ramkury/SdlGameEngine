@@ -14,6 +14,7 @@ Sound::~Sound()
 {
 	if (IsOpen())
 	{
+		while (IsPlaying()) {}; // Busy wait
 		Mix_HaltChannel(channel);
 		Mix_FreeChunk(chunk);
 	}
@@ -29,7 +30,7 @@ void Sound::Play(int times)
 
 void Sound::Stop()
 {
-	if (chunk != nullptr)
+	if (IsOpen())
 	{
 		Mix_HaltChannel(channel);
 	}
@@ -47,6 +48,11 @@ void Sound::Open(std::string file)
 bool Sound::IsOpen()
 {
 	return chunk != nullptr;
+}
+
+bool Sound::IsPlaying()
+{
+	return IsOpen() && Mix_Playing(channel);
 }
 
 void Sound::Update(float dt)

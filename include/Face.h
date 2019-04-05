@@ -9,9 +9,9 @@ public:
 	
 	void Damage(int damage);
 
-	virtual void Update(float dt) override;
-	virtual void Render() override;
-	virtual bool Is(std::string type) override;
+	void Update(float dt) override;
+	void Render() override;
+	bool Is(std::string type) override;
 
 private:
 	int hitpoints;

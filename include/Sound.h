@@ -13,6 +13,7 @@ public:
 	void Stop();
 	void Open(std::string file);
 	bool IsOpen();
+	bool IsPlaying();
 	void Update(float dt) override;
 	void Render() override;
 	bool Is(std::string type) override;

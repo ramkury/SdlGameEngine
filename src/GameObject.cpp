@@ -1,6 +1,5 @@
 #include "GameObject.h"
-
-
+#include "Sound.h"
 
 GameObject::GameObject() : isDead(false)
 {
@@ -22,6 +21,11 @@ void GameObject::Update(float dt)
 
 void GameObject::Render()
 {
+	if (isDead)
+	{
+		return;
+	}
+
 	for (auto& c : components)
 	{
 		c->Render();
@@ -30,12 +34,13 @@ void GameObject::Render()
 
 bool GameObject::IsDead()
 {
-	return isDead;
+	return isDead && !(dynamic_cast<Sound*>(GetComponent("sound"))->IsPlaying());
 }
 
 void GameObject::RequestDelete()
 {
 	isDead = true;
+	Box.h = Box.y = 0;
 }
 
 void GameObject::AddComponent(Component * cpt)
@@ -45,7 +50,7 @@ void GameObject::AddComponent(Component * cpt)
 
 void GameObject::RemoveComponent(Component * cpt)
 {
-	for (auto iter = components.begin(); iter != components.end(); iter++)
+	for (auto iter = components.begin(); iter != components.end(); ++iter)
 	{
 		if (iter->get() == cpt)
 		{

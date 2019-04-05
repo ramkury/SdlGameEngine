@@ -1,5 +1,4 @@
 #pragma once
-#include "Sprite.h"
 #include "Music.h"
 #include "GameObject.h"
 #include <vector>
@@ -20,7 +19,7 @@ public:
 
 private:
 	Music music;
-	bool quitRequested;
+	bool quitRequested = false;
 	std::vector<std::unique_ptr<GameObject>> objectArray;
 };
 

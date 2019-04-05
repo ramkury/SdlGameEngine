@@ -11,10 +11,10 @@ void Face::Damage(int damage)
 	if (hitpoints <= 0)
 	{
 		associated.RequestDelete();
-		auto sound = associated.GetComponent("sound");
+		const auto sound = associated.GetComponent("sound");
 		if (sound != nullptr)
 		{
-			static_cast<Sound*>(sound)->Play(1);
+			dynamic_cast<Sound*>(sound)->Play(1);
 		}
 	}
 }

@@ -11,7 +11,7 @@ public:
 	~Sprite();
 	void Open(std::string file);
 	void SetClip(int x, int y, int w, int h);
-	void Render();
+	void Render() override;
 	int GetWidth();
 	int GetHeight();
 	bool IsOpen();

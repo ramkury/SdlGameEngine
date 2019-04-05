@@ -43,8 +43,8 @@ void Sprite::Open(std::string file)
 	}
 
 	SetClip(0, 0, width, height);
-	associated.Box.w = (float)width;
-	associated.Box.h = (float)height;
+	associated.Box.w = float(width);
+	associated.Box.h = float(height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h)
@@ -58,10 +58,10 @@ void Sprite::SetClip(int x, int y, int w, int h)
 void Sprite::Render()
 {
 	SDL_Rect dstRect;
-	dstRect.x = (int)associated.Box.x;
-	dstRect.y = (int)associated.Box.y;
-	dstRect.w = (int)associated.Box.w;
-	dstRect.h = (int)associated.Box.h;
+	dstRect.x = int(associated.Box.x);
+	dstRect.y = int(associated.Box.y);
+	dstRect.w = int(associated.Box.w);
+	dstRect.h = int(associated.Box.h);
 	SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 
