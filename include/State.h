@@ -1,19 +1,25 @@
 #pragma once
-#include "Sprite.h"
 #include "Music.h"
+#include "GameObject.h"
+#include <vector>
+#include <memory>
 
 class State
 {
 public:
 	State();
+	~State();
+
 	bool QuitRequested();
 	void LoadAssets();
 	void Update(float dt);
 	void Render();
+	void Input();
+	void AddObject(int mouseX, int mouseY);
 
 private:
-	Sprite bg;
 	Music music;
-	bool quitRequested;
+	bool quitRequested = false;
+	std::vector<std::unique_ptr<GameObject>> objectArray;
 };
 

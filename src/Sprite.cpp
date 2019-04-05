@@ -3,14 +3,12 @@
 #include "SDL2/SDL_image.h"
 #include "Game.h"
 
-Sprite::Sprite()
+Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr)
 {
-	texture = nullptr;
 }
 
-Sprite::Sprite(std::string file)
+Sprite::Sprite(GameObject& associated, std::string file) : Sprite(associated)
 {
-	texture = nullptr;
 	Open(file);
 }
 
@@ -45,6 +43,8 @@ void Sprite::Open(std::string file)
 	}
 
 	SetClip(0, 0, width, height);
+	associated.Box.w = float(width);
+	associated.Box.h = float(height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h)
@@ -55,15 +55,14 @@ void Sprite::SetClip(int x, int y, int w, int h)
 	clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y)
+void Sprite::Render()
 {
 	SDL_Rect dstRect;
-	dstRect.x = x;
-	dstRect.y = y;
-	dstRect.w = width;
-	dstRect.h = height;
+	dstRect.x = int(associated.Box.x);
+	dstRect.y = int(associated.Box.y);
+	dstRect.w = int(associated.Box.w);
+	dstRect.h = int(associated.Box.h);
 	SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
-
 }
 
 int Sprite::GetWidth()
@@ -79,4 +78,13 @@ int Sprite::GetHeight()
 bool Sprite::IsOpen()
 {
 	return texture != nullptr;
+}
+
+void Sprite::Update(float dt)
+{
+}
+
+bool Sprite::Is(std::string type)
+{
+	return type == "sprite";
 }
