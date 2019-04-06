@@ -34,7 +34,7 @@ void GameObject::Render()
 
 bool GameObject::IsDead()
 {
-	return isDead && !(dynamic_cast<Sound*>(GetComponent("sound"))->IsPlaying());
+	return isDead && !(std::dynamic_pointer_cast<Sound>(GetComponent("sound"))->IsPlaying());
 }
 
 void GameObject::RequestDelete()
@@ -60,13 +60,13 @@ void GameObject::RemoveComponent(Component * cpt)
 	}
 }
 
-Component * GameObject::GetComponent(std::string type)
+std::shared_ptr<Component> GameObject::GetComponent(const std::string& type)
 {
 	for (auto& c : components)
 	{
 		if (c->Is(type))
 		{
-			return c.get();
+			return c;
 		}
 	}
 	return nullptr;

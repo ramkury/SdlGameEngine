@@ -17,7 +17,7 @@ public:
 	bool IsOpen();
 
 	void Update(float dt) override;
-	bool Is(std::string type) override;
+	bool Is(const std::string& type) override;
 	
 private:
 	SDL_Texture* texture;

@@ -19,12 +19,12 @@ public:
 	void RequestDelete();
 	void AddComponent(Component* cpt);
 	void RemoveComponent(Component* cpt);
-	Component* GetComponent(std::string type);
+	std::shared_ptr<Component> GetComponent(const std::string& type);
 
 	Rect Box;
 
 private:
-	std::vector<std::unique_ptr<Component>> components;
+	std::vector<std::shared_ptr<Component>> components;
 	bool isDead;
 };
 
