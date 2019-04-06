@@ -72,7 +72,7 @@ void State::Input() {
 			// Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
 			for (int i = objectArray.size() - 1; i >= 0; --i) {
 				// Obtem o ponteiro e casta pra Face.
-				GameObject* go = (GameObject*)objectArray[i].get();
+				auto go = objectArray[i];
 				// Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
 				// O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
 				// ao usar get(), violamos esse princípio e estamos menos seguros.
@@ -80,7 +80,7 @@ void State::Input() {
 				// chamar funções de GameObjects, use objectArray[i]->função() direto.
 
 				if (go->Box.Contains({ (float)mouseX, (float)mouseY })) {
-					Face* face = (Face*)go->GetComponent("face");
+					auto face = std::dynamic_pointer_cast<Face>( go->GetComponent("face"));
 					if (nullptr != face) {
 						// Aplica dano
 						face->Damage(std::rand() % 10 + 10);

@@ -20,6 +20,6 @@ public:
 private:
 	Music music;
 	bool quitRequested = false;
-	std::vector<std::unique_ptr<GameObject>> objectArray;
+	std::vector<std::shared_ptr<GameObject>> objectArray;
 };
 

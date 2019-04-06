@@ -14,7 +14,7 @@ void Face::Damage(int damage)
 		const auto sound = associated.GetComponent("sound");
 		if (sound != nullptr)
 		{
-			dynamic_cast<Sound*>(sound)->Play(1);
+			std::dynamic_pointer_cast<Sound>(sound)->Play(1);
 		}
 	}
 }
@@ -27,7 +27,7 @@ void Face::Render()
 {
 }
 
-bool Face::Is(std::string type)
+bool Face::Is(const std::string& type)
 {
 	return type == "face";
 }
