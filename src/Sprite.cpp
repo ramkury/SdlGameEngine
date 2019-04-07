@@ -49,33 +49,31 @@ void Sprite::Open(std::string file)
 
 void Sprite::SetClip(int x, int y, int w, int h)
 {
-	clipRect.x = x;
-	clipRect.y = y;
-	clipRect.w = w;
-	clipRect.h = h;
+	clipRect = { x, y, w, h };
 }
 
 void Sprite::Render()
 {
-	SDL_Rect dstRect;
-	dstRect.x = int(associated.Box.x);
-	dstRect.y = int(associated.Box.y);
-	dstRect.w = int(associated.Box.w);
-	dstRect.h = int(associated.Box.h);
+	Render(int(associated.Box.x), int(associated.Box.y));
+}
+
+void Sprite::Render(int x, int y) const
+{
+	SDL_Rect dstRect = {x, y, width, height};
 	SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 
-int Sprite::GetWidth()
+int Sprite::GetWidth() const
 {
 	return width;
 }
 
-int Sprite::GetHeight()
+int Sprite::GetHeight() const
 {
 	return height;
 }
 
-bool Sprite::IsOpen()
+bool Sprite::IsOpen() const
 {
 	return texture != nullptr;
 }

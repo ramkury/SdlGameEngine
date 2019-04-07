@@ -12,9 +12,10 @@ public:
 	void Open(std::string file);
 	void SetClip(int x, int y, int w, int h);
 	void Render() override;
-	int GetWidth();
-	int GetHeight();
-	bool IsOpen();
+	void Render(int x, int y) const;
+	int GetWidth() const;
+	int GetHeight() const;
+	bool IsOpen() const;
 
 	void Update(float dt) override;
 	bool Is(const std::string& type) override;
