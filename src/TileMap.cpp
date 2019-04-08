@@ -2,7 +2,7 @@
 #include <fstream>
 
 
-TileMap::TileMap(GameObject& associated, const std::string& file, TileSet* tileSet) : tileSet(tileSet)
+TileMap::TileMap(GameObject& associated, const std::string& file, TileSet* tileSet) : Component(associated), tileSet(tileSet)
 {
 	Load(file);
 }
@@ -20,11 +20,11 @@ void TileMap::Load(const std::string& file)
 	tileMatrix.clear();
 	tileMatrix.reserve(mapSize);
 
-	while (!fs.eof())
+	while (tileMatrix.size() < tileMatrix.capacity())
 	{
 		int tile;
 		fs >> tile >> c;
-		tileMatrix.push_back(tile);
+		tileMatrix.push_back(tile - 1);
 	}
 
 	if (tileMatrix.size() != mapSize)
@@ -35,7 +35,7 @@ void TileMap::Load(const std::string& file)
 
 void TileMap::SetTileSet(TileSet* tileSet)
 {
-	this->tileSet = tileSet;
+	this->tileSet = std::unique_ptr<TileSet>(tileSet);
 }
 
 int& TileMap::At(int x, int y, int z)
@@ -61,8 +61,11 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 	{
 		for (int y = 0; y < mapHeight; ++y)
 		{
+			auto tile = At(x, y, layer);
+			if (tile < 0) continue;
+
 			tileSet->RenderTile(
-				At(x, y, layer),
+				tile,
 				x * tileSet->GetTileWidth(),
 				y * tileSet->GetTileHeight()
 			);
@@ -83,4 +86,13 @@ int TileMap::MapHeight() const
 int TileMap::MapDepth() const
 {
 	return mapDepth;
+}
+
+void TileMap::Update(float dt)
+{
+}
+
+bool TileMap::Is(const std::string& type)
+{
+	return type == "tileMap";
 }

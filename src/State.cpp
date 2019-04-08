@@ -3,6 +3,8 @@
 #include "Face.h"
 #include "Sound.h"
 #include "Sprite.h"
+#include "TileSet.h"
+#include "TileMap.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")
@@ -10,6 +12,13 @@ State::State() :
 	auto background = new GameObject();
 	background->AddComponent(new Sprite(*background, "assets/img/ocean.jpg"));
 	objectArray.emplace_back(background);
+
+	auto tiles = new GameObject();
+	auto tileSet = new TileSet(*tiles, 64, 64, "assets/img/tileset.png");
+	auto tileMap = new TileMap(*tiles, "assets/map/tileMap.txt", tileSet);
+	tiles->AddComponent(tileMap);
+	objectArray.emplace_back(tiles);
+
 	music.Play();
 }
 
