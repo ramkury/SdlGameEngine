@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "SDL2/SDL_image.h"
 #include "Game.h"
+#include "Resources.h"
 
 Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr)
 {
@@ -15,26 +16,11 @@ Sprite::Sprite(GameObject& associated, std::string file) : Sprite(associated)
 
 Sprite::~Sprite()
 {
-	if (texture != nullptr)
-	{
-		SDL_DestroyTexture(texture);
-	}
 }
 
 void Sprite::Open(std::string file)
-{
-	if (texture != nullptr)
-	{
-		SDL_DestroyTexture(texture);
-		texture = nullptr;
-	}
-	
-	texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
-
-	if (texture == nullptr)
-	{
-		throw std::runtime_error("Could not load texture " + file + ". Error: " + SDL_GetError());
-	}
+{	
+	texture = Resources::GetImage(file);
 
 	int error = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
 	if (error)
