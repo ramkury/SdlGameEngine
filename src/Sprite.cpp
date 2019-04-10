@@ -59,7 +59,7 @@ void Sprite::Render()
 
 void Sprite::Render(int x, int y) const
 {
-	SDL_Rect dstRect = {x, y, width, height};
+	SDL_Rect dstRect = { x, y, clipRect.w, clipRect.h };
 	SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
 }
 
