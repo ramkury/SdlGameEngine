@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Resources.h"
+#include "InputManager.h"
 
 Game* Game::instance = nullptr;
 
@@ -56,6 +57,7 @@ void Game::Run()
 {
 	while (!state->QuitRequested())
 	{
+		InputManager::GetInstance().Update();
 		state->Update(33);
 		state->Render();
 		SDL_RenderPresent(renderer);

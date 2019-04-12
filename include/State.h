@@ -14,7 +14,6 @@ public:
 	void LoadAssets();
 	void Update(float dt);
 	void Render();
-	void Input();
 	void AddObject(int mouseX, int mouseY);
 
 private:
