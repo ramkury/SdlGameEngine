@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "Resources.h"
 
 Game* Game::instance = nullptr;
 
@@ -60,6 +61,10 @@ void Game::Run()
 		SDL_RenderPresent(renderer);
 		SDL_Delay(33);
 	}
+
+	Resources::ClearImages();
+	Resources::ClearMusic();
+	Resources::ClearSound();
 }
 
 SDL_Renderer* Game::GetRenderer()

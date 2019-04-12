@@ -34,7 +34,7 @@ void GameObject::Render()
 
 bool GameObject::IsDead()
 {
-	return isDead && !(std::dynamic_pointer_cast<Sound>(GetComponent("sound"))->IsPlaying());
+	return isDead;
 }
 
 void GameObject::RequestDelete()
