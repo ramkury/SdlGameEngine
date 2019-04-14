@@ -25,24 +25,24 @@ void Camera::Update(float dt)
 	else
 	{
 		const double increment = 100.0f;
-		Vec2 velocity;
+		speed = { 0, 0 };
 		auto& input = InputManager::GetInstance();
 		if (input.IsKeyDown(UP_ARROW_KEY))
 		{
-			velocity.y -= increment;
+			speed.y -= increment;
 		}
 		if (input.IsKeyDown(DOWN_ARROW_KEY))
 		{
-			velocity.y += increment;
+			speed.y += increment;
 		}
 		if (input.IsKeyDown(RIGHT_ARROW_KEY))
 		{
-			velocity.x += increment;
+			speed.x += increment;
 		}
 		if (input.IsKeyDown(LEFT_ARROW_KEY))
 		{
-			velocity.x -= increment;
+			speed.x -= increment;
 		}
-		pos += velocity * dt;
+		pos += speed * dt;
 	}
 }

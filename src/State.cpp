@@ -7,12 +7,14 @@
 #include "TileMap.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "CameraFollower.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")
 {
 	auto background = new GameObject();
 	background->AddComponent(new Sprite(*background, "assets/img/ocean.jpg"));
+	background->AddComponent(new CameraFollower(*background));
 	objectArray.emplace_back(background);
 
 	auto tiles = new GameObject();
