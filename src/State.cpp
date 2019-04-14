@@ -6,6 +6,7 @@
 #include "TileSet.h"
 #include "TileMap.h"
 #include "InputManager.h"
+#include "Camera.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")
@@ -39,12 +40,14 @@ void State::LoadAssets()
 
 void State::Update(float dt)
 {
+	Camera::Update(dt);
+
 	auto& input = InputManager::GetInstance();
 	quitRequested = input.QuitRequested() || input.IsKeyDown(ESCAPE_KEY);
 
 	if (input.KeyPress(SPACE_KEY))
 	{
-		const auto objPos = Vec2(200.f, 0.f).Rotate((rand() % 1440) / 4.f) + Vec2(float(input.GetMouseX()) , float(input.GetMouseY()));
+		const auto objPos = Vec2(200.f, 0.f).RotateD((rand() % 1440) / 4.f) + Vec2(float(input.GetMouseX()) , float(input.GetMouseY()));
 		AddObject(int(objPos.x), int(objPos.y));
 	}
 
@@ -73,7 +76,7 @@ void State::AddObject(int mouseX, int mouseY)
 {
 	auto go = new GameObject();
 	go->AddComponent(new Sprite(*go, "assets/img/penguinface.png"));
-	go->Box.CenterAt(mouseX, mouseY);
+	go->Box.CenterAt(mouseX + Camera::pos.x, mouseY + Camera::pos.y);
 	go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
 	go->AddComponent(new Face(*go));
 	objectArray.emplace_back(go);

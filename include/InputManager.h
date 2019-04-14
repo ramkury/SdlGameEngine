@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL2/SDL_mouse.h>
 
 #define LEFT_ARROW_KEY    SDLK_LEFT
 #define RIGHT_ARROW_KEY   SDLK_RIGHT

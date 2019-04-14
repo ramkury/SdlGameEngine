@@ -1,5 +1,6 @@
 #include "TileMap.h"
 #include <fstream>
+#include "Camera.h"
 
 
 TileMap::TileMap(GameObject& associated, const std::string& file, TileSet* tileSet) : Component(associated), tileSet(tileSet)
@@ -51,7 +52,7 @@ void TileMap::Render()
 {
 	for (int z = 0; z < mapDepth; ++z)
 	{
-		RenderLayer(z);
+		RenderLayer(z, int(Camera::pos.x), int(Camera::pos.y));
 	}
 }
 
@@ -61,13 +62,13 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 	{
 		for (int y = 0; y < mapHeight; ++y)
 		{
-			auto tile = At(x, y, layer);
+			const auto tile = At(x, y, layer);
 			if (tile < 0) continue;
 
 			tileSet->RenderTile(
 				tile,
-				x * tileSet->GetTileWidth(),
-				y * tileSet->GetTileHeight()
+				x * tileSet->GetTileWidth() - cameraX,
+				y * tileSet->GetTileHeight() - cameraY
 			);
 		}
 	}

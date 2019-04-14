@@ -3,6 +3,7 @@
 #include "SDL2/SDL_image.h"
 #include "Game.h"
 #include "Resources.h"
+#include "Camera.h"
 
 Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr)
 {
@@ -40,7 +41,7 @@ void Sprite::SetClip(int x, int y, int w, int h)
 
 void Sprite::Render()
 {
-	Render(int(associated.Box.x), int(associated.Box.y));
+	Render(int(associated.Box.x - Camera::pos.x), int(associated.Box.y - Camera::pos.y));
 }
 
 void Sprite::Render(int x, int y) const

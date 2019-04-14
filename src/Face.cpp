@@ -1,6 +1,8 @@
 #include "Face.h"
 #include "Sound.h"
 #include "InputManager.h"
+#include <SDL2/SDL_mouse.h>
+#include "Camera.h"
 
 Face::Face(GameObject & associated) : Component(associated), hitpoints(30)
 {
@@ -23,7 +25,7 @@ void Face::Damage(int damage)
 void Face::Update(float dt)
 {
 	auto& input = InputManager::GetInstance();
-	if (input.MousePress(LEFT_MOUSE_BUTTON) && associated.Box.Contains({float(input.GetMouseX()), float(input.GetMouseY())}))
+	if (input.MousePress(LEFT_MOUSE_BUTTON) && associated.Box.Contains({input.GetMouseX() + Camera::pos.x, input.GetMouseY() + Camera::pos.y}))
 	{
 		Damage(std::rand() % 10 + 10);
 	}
