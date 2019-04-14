@@ -17,7 +17,7 @@ void Face::Damage(int damage)
 		const auto sound = associated.GetComponent("sound");
 		if (sound != nullptr)
 		{
-			std::dynamic_pointer_cast<Sound>(sound)->Play(1);
+			std::reinterpret_pointer_cast<Sound>(sound)->Play(1);
 		}
 	}
 }
