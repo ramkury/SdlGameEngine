@@ -58,6 +58,7 @@ void TileMap::Render()
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 {
+	const int parallax_offset = (layer * 2) + 1;
 	for (int x = 0; x < mapWidth; ++x)
 	{
 		for (int y = 0; y < mapHeight; ++y)
@@ -67,8 +68,8 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY)
 
 			tileSet->RenderTile(
 				tile,
-				x * tileSet->GetTileWidth() - cameraX,
-				y * tileSet->GetTileHeight() - cameraY
+				x * tileSet->GetTileWidth() - cameraX * parallax_offset,
+				y * tileSet->GetTileHeight() - cameraY * parallax_offset
 			);
 		}
 	}
