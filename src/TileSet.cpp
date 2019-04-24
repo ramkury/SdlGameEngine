@@ -12,7 +12,7 @@ TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, const st
 
 void TileSet::RenderTile(unsigned index, float x, float y)
 {
-	const bool validIndex = index >= 0 && index < unsigned(rows * columns);
+	const bool validIndex = index < unsigned(rows * columns);
 	if (!validIndex)
 	{
 		throw std::runtime_error("Bad index");
