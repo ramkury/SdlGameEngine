@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Resources.h"
+#include "InputManager.h"
 
 Game* Game::instance = nullptr;
 
@@ -42,6 +43,13 @@ Game::Game(std::string title, int width, int height)
 }
 
 
+void Game::CalculateDeltaTime()
+{
+	const auto currentFrame = SDL_GetTicks();
+	dt = (currentFrame - frameStart) / 1000.f;
+	frameStart = currentFrame;
+}
+
 Game::~Game()
 {
 	delete state;
@@ -56,7 +64,9 @@ void Game::Run()
 {
 	while (!state->QuitRequested())
 	{
-		state->Update(33);
+		CalculateDeltaTime();
+		InputManager::GetInstance().Update();
+		state->Update(dt);
 		state->Render();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(33);
@@ -67,7 +77,7 @@ void Game::Run()
 	Resources::ClearSound();
 }
 
-SDL_Renderer* Game::GetRenderer()
+SDL_Renderer* Game::GetRenderer() const
 {
 	return renderer;
 }
@@ -81,9 +91,12 @@ Game& Game::GetInstance()
 	return *instance;
 }
 
-State & Game::GetState()
+State & Game::GetState() const
 {
 	return *state;
 }
 
-
+float Game::GetDeltaTime() const
+{
+	return dt;
+}

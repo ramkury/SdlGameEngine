@@ -11,11 +11,15 @@ private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	State* state;
+	unsigned frameStart = 0;
+	float dt = 0.f;
+	void CalculateDeltaTime();
 public:
 	~Game();
 	void Run();
-	SDL_Renderer* GetRenderer();
+	SDL_Renderer* GetRenderer() const;
 	static Game& GetInstance();
-	State& GetState();
+	State& GetState() const;
+	float GetDeltaTime() const;
 };
 

@@ -13,12 +13,15 @@ public:
 	Vec2 operator+(const Vec2& rhs) const;
 	Vec2 operator-(const Vec2& rhs) const;
 	Vec2 operator*(float scalar) const;
+	void operator+=(const Vec2& rhs);
 
 	// Methods
 	float Abs() const;
 	Vec2 Norm() const;
 	float Distance(Vec2& other) const;
-	float Angle() const;
-	Vec2 Rotate(float degrees) const;
+	float AngleR() const;
+	float AngleD() const;
+	Vec2 RotateR(float radians) const;
+	Vec2 RotateD(float degrees) const;
 };
 
