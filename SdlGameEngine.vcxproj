@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Alien.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CameraFollower.cpp" />
     <ClCompile Include="src\Component.cpp" />
-    <ClCompile Include="src\Face.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
@@ -39,10 +39,10 @@
     <ClCompile Include="src\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Alien.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CameraFollower.h" />
     <ClInclude Include="include\Component.h" />
-    <ClInclude Include="include\Face.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\InputManager.h" />

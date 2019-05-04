@@ -16,5 +16,6 @@ public:
 	// Methods
 	bool Contains(const Vec2& point) const;
 	Vec2 Center() const;
-	void CenterAt(int cx, int cy);
+	void CenterAt(float cx, float cy);
+	void CenterAt(Vec2 pos);
 };

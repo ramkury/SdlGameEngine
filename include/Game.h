@@ -5,6 +5,13 @@
 
 class Game
 {
+public:
+	~Game();
+	void Run();
+	SDL_Renderer* GetRenderer() const;
+	static Game& GetInstance();
+	State& GetState() const;
+	float GetDeltaTime() const;
 private:
 	Game(std::string title, int width, int height);
 	static Game* instance;
@@ -14,12 +21,5 @@ private:
 	unsigned frameStart = 0;
 	float dt = 0.f;
 	void CalculateDeltaTime();
-public:
-	~Game();
-	void Run();
-	SDL_Renderer* GetRenderer() const;
-	static Game& GetInstance();
-	State& GetState() const;
-	float GetDeltaTime() const;
 };
 

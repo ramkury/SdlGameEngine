@@ -2,10 +2,10 @@
 
 float Utils::Deg2Rad(float angle)
 {
-	return (angle / 180.f) * PI;
+	return angle * (PI / 180);
 }
 
 float Utils::Rad2Deg(float angle)
 {
-	return angle * (180.f * PI);
+	return angle * (180.f / PI);
 }

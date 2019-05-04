@@ -13,6 +13,7 @@ public:
 	GameObject();
 	~GameObject();
 
+	void Start();
 	void Update(float dt);
 	void Render();
 	bool IsDead();
@@ -25,6 +26,7 @@ public:
 
 private:
 	std::vector<std::shared_ptr<Component>> components;
-	bool isDead;
+	bool isDead = false;
+	bool started = false;
 };
 

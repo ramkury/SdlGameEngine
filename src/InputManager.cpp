@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include <SDL2/SDL.h>
+#include "Camera.h"
 
 void InputManager::Update()
 {
@@ -82,6 +83,16 @@ int InputManager::GetMouseX()
 int InputManager::GetMouseY()
 {
 	return mouseY;
+}
+
+int InputManager::GetMouseMapX() const
+{
+	return int(mouseX) + int(Camera::pos.x);
+}
+
+int InputManager::GetMouseMapY() const
+{
+	return mouseY + int(Camera::pos.y);
 }
 
 bool InputManager::QuitRequested()

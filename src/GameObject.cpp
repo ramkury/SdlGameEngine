@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "Sound.h"
 
-GameObject::GameObject() : isDead(false)
+GameObject::GameObject()
 {
 }
 
@@ -9,6 +9,19 @@ GameObject::GameObject() : isDead(false)
 GameObject::~GameObject()
 {
 	components.clear();
+}
+
+void GameObject::Start()
+{
+	if (started) 
+		return;
+
+	for (auto& c : components)
+	{
+		c->Start();
+	}
+
+	started = true;
 }
 
 void GameObject::Update(float dt)
