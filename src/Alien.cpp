@@ -6,10 +6,13 @@
 #include "Minion.h"
 #include "Utils.h"
 #include "Game.h"
+#include "Collider.h"
+#include "Bullet.h"
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated), minionArray(nMinions)
 {
 	associated.AddComponent(new Sprite(associated, "assets/img/alien.png"));
+	associated.AddComponent(new Collider(associated));
 }
 
 Alien::~Alien()
@@ -94,7 +97,7 @@ void Alien::Update(float dt)
 			}
 		}
 		
-		const auto minion = GET_COMPONENT(shooter, Minion);
+		const auto minion = GET_COMPONENT(*shooter, Minion);
 		minion->Shoot(currentTask.pos);
 		taskQueue.pop();
 		break;
@@ -110,4 +113,14 @@ void Alien::Render()
 bool Alien::Is(const std::string& type)
 {
 	return type == "Alien";
+}
+
+void Alien::NotifyCollision(GameObject& other)
+{
+	auto bullet = GET_COMPONENT(other, Bullet);
+	if (bullet == nullptr)
+	{
+		return;
+	}
+	hp -= bullet->GetDamage();
 }

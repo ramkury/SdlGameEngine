@@ -3,6 +3,9 @@
 #include "PenguinCannon.h"
 #include "Game.h"
 #include "InputManager.h"
+#include "Collider.h"
+#include "Camera.h"
+#include "Bullet.h"
 
 PenguinBody* PenguinBody::player;
 
@@ -10,6 +13,7 @@ PenguinBody::PenguinBody(GameObject& associated): Component(associated)
 {
 	player = this;
 	associated.AddComponent(new Sprite(associated, "assets/img/penguin.png"));
+	associated.AddComponent(new Collider(associated));
 }
 
 PenguinBody::~PenguinBody()
@@ -30,6 +34,7 @@ void PenguinBody::Update(float dt)
 	if (hp <= 0)
 	{
 		associated.RequestDelete();
+		Camera::Unfollow();
 		return;
 	}
 
@@ -74,4 +79,14 @@ void PenguinBody::Render()
 bool PenguinBody::Is(const std::string& type)
 {
 	return type == "PenguinBody";
+}
+
+void PenguinBody::NotifyCollision(GameObject& other)
+{
+	auto bullet = GET_COMPONENT(other, Bullet);
+	if (bullet == nullptr)
+	{
+		return;
+	}
+	hp -= bullet->GetDamage();
 }

@@ -10,6 +10,7 @@ public:
 	void Update(float dt) override;
 	void Render() override;
 	bool Is(const std::string& type) override;
+	void NotifyCollision(GameObject& other) override;
 
 	static PenguinBody* player;
 

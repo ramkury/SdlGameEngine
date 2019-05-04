@@ -8,6 +8,8 @@
 #include "CameraFollower.h"
 #include "Alien.h"
 #include "PenguinBody.h"
+#include "Collider.h"
+#include "../Collision.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")
@@ -32,6 +34,8 @@ State::State() :
 	penguin->AddComponent(new PenguinBody(*penguin));
 	penguin->Box.CenterAt(100	, 100);
 	objectArray.emplace_back(penguin);
+
+	Camera::Follow(penguin);
 
 	music.Play();
 }
@@ -72,7 +76,7 @@ void State::Update(float dt)
 	auto& input = InputManager::GetInstance();
 	quitRequested = input.QuitRequested() || input.IsKeyDown(ESCAPE_KEY);
 
-	for (size_t i = 0; i < objectArray.size(); ++i)
+	for (size_t i = 0; i < objectArray.size(); i++)
 	{
 		objectArray[i]->Update(dt);
 	}
@@ -81,6 +85,29 @@ void State::Update(float dt)
 		if (objectArray[i]->IsDead())
 		{
 			objectArray.erase(objectArray.begin() + i);
+		}
+	}
+	for (size_t i = 0; i < objectArray.size(); i++)
+	{
+		for (size_t j = i + 1; j < objectArray.size(); j++)
+		{
+			auto& iGo = objectArray[i];
+			auto iCollider = GET_COMPONENT(*iGo, Collider);
+			if (iCollider == nullptr)
+			{
+				continue;
+			}
+			auto& jGo = objectArray[j];
+			auto jCollider = GET_COMPONENT(*jGo, Collider);
+			if (jCollider == nullptr)
+			{
+				continue;
+			}
+			if (Collision::IsColliding(iCollider->Box, jCollider->Box, iGo->AngleDeg, jGo->AngleDeg))
+			{
+				iGo->NotifyCollision(*jGo);
+				jGo->NotifyCollision(*iGo);
+			}
 		}
 	}
 }

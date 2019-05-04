@@ -4,7 +4,7 @@
 #include <memory>
 #include "Rect.h"
 
-#define GET_COMPONENT(GO, TYPE) std::static_pointer_cast<TYPE>(GO->GetComponent(#TYPE))
+#define GET_COMPONENT(GO, TYPE) std::static_pointer_cast<TYPE>((GO).GetComponent(#TYPE))
 
 class Component;
 
@@ -21,6 +21,7 @@ public:
 	void RequestDelete();
 	void AddComponent(Component* cpt);
 	void RemoveComponent(Component* cpt);
+	void NotifyCollision(GameObject& other);
 	std::shared_ptr<Component> GetComponent(const std::string& type);
 
 	Rect Box;

@@ -7,6 +7,7 @@ public:
 	void Update(float dt) override;
 	void Render() override;
 	bool Is(const std::string& type) override;
+	void NotifyCollision(GameObject& other) override;
 	int GetDamage() const;
 private:
 	Vec2 speed;

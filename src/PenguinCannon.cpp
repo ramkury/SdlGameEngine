@@ -5,10 +5,12 @@
 #include "Bullet.h"
 #include "Game.h"
 #include "Utils.h"
+#include "Collider.h"
 
 PenguinCannon::PenguinCannon(GameObject& associated, std::weak_ptr<GameObject> penguinBody) : Component(associated), pbody(std::move(penguinBody))
 {
 	associated.AddComponent(new Sprite(associated, "assets/img/cubngun.png"));
+	associated.AddComponent(new Collider(associated));
 }
 
 void PenguinCannon::Update(float dt)
@@ -39,6 +41,10 @@ void PenguinCannon::Render()
 bool PenguinCannon::Is(const std::string& type)
 {
 	return type == "PenguinCannon";
+}
+
+void PenguinCannon::NotifyCollision(GameObject& other)
+{
 }
 
 void PenguinCannon::Shoot() const

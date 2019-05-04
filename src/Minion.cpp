@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "Game.h"
 #include "Bullet.h"
+#include "Collider.h"
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) 
 	: Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg)
@@ -11,11 +12,16 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
 	const auto scale = 1 + (rand() % 50) / 100.f;
 	sprite->SetScale(scale, scale);
 	associated.AddComponent(sprite);
+	associated.AddComponent(new Collider(associated));
 }
 
 bool Minion::Is(const std::string& type)
 {
 	return type == "Minion";
+}
+
+void Minion::NotifyCollision(GameObject& other)
+{
 }
 
 void Minion::Shoot(Vec2 target) const

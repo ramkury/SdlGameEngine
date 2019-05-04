@@ -8,6 +8,8 @@ public:
 	void Update(float dt) override;
 	void Render() override;
 	bool Is(const std::string& type) override;
+	void NotifyCollision(GameObject& other) override;
+
 	void Shoot() const;
 private:
 	std::weak_ptr<GameObject> pbody;

@@ -75,6 +75,14 @@ void GameObject::RemoveComponent(Component * cpt)
 	}
 }
 
+void GameObject::NotifyCollision(GameObject& other)
+{
+	for (size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->NotifyCollision(other);
+	}
+}
+
 std::shared_ptr<Component> GameObject::GetComponent(const std::string& type)
 {
 	for (auto& c : components)
