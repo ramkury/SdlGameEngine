@@ -30,6 +30,11 @@ Vec2 Vec2::operator*(float scalar) const
 	return {x * scalar, y * scalar};
 }
 
+bool Vec2::operator==(const Vec2& rhs) const
+{
+	return x == rhs.x && y == rhs.y;
+}
+
 void Vec2::operator+=(const Vec2& rhs)
 {
 	x += rhs.x;
@@ -44,7 +49,7 @@ float Vec2::Abs() const
 Vec2 Vec2::Norm() const
 {
 	const auto abs = Abs();
-	return {x / abs, y / abs};
+	return abs == 0 ? *this : Vec2(x / abs, y / abs);
 }
 
 float Vec2::Distance(Vec2 & other) const

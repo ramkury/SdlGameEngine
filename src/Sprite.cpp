@@ -41,23 +41,23 @@ void Sprite::SetClip(int x, int y, int w, int h)
 
 void Sprite::Render()
 {
-	Render(int(associated.Box.x - Camera::pos.x), int(associated.Box.y - Camera::pos.y));
+	Render(int(associated.Box.x - Camera::pos.x), int(associated.Box.y - Camera::pos.y), int(associated.Box.w), int(associated.Box.h));
 }
 
-void Sprite::Render(int x, int y) const
+void Sprite::Render(int x, int y, int w, int h) const
 {
-	SDL_Rect dstRect = { x, y, clipRect.w, clipRect.h };
-	SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect);
+	SDL_Rect dstRect = { x, y, w, h };
+	SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &dstRect, associated.AngleDeg, nullptr, SDL_FLIP_NONE);
 }
 
 int Sprite::GetWidth() const
 {
-	return width;
+	return int(width * scale.x);
 }
 
 int Sprite::GetHeight() const
 {
-	return height;
+	return int(height * scale.y);
 }
 
 bool Sprite::IsOpen() const
@@ -71,5 +71,28 @@ void Sprite::Update(float dt)
 
 bool Sprite::Is(const std::string& type)
 {
-	return type == "sprite";
+	return type == "Sprite";
+}
+
+void Sprite::SetScale(float scaleX, float scaleY)
+{
+	if (scaleX != 0)
+	{
+		scale.x = scaleX;
+		const auto newWidth = width * scaleX;
+		associated.Box.x += (associated.Box.w - newWidth) / 2;
+		associated.Box.w = newWidth;
+	}
+	if (scaleY != 0)
+	{
+		scale.y = scaleY;
+		const auto newHeight = height * scaleY;
+		associated.Box.y += (associated.Box.y - newHeight) / 2;
+		associated.Box.h = newHeight;
+	}
+}
+
+Vec2 Sprite::GetScale() const
+{
+	return scale;
 }

@@ -1,13 +1,12 @@
 #include "State.h"
 #include "SDL2/SDL.h"
-#include "Face.h"
-#include "Sound.h"
 #include "Sprite.h"
 #include "TileSet.h"
 #include "TileMap.h"
 #include "InputManager.h"
 #include "Camera.h"
 #include "CameraFollower.h"
+#include "Alien.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")
@@ -23,12 +22,32 @@ State::State() :
 	tiles->AddComponent(tileMap);
 	objectArray.emplace_back(tiles);
 
+	auto alien = new GameObject();
+	alien->AddComponent(new Alien(*alien, 4));
+	alien->Box.CenterAt(512, 300);
+	objectArray.emplace_back(alien);
+
 	music.Play();
 }
 
 State::~State()
 {
 	objectArray.clear();
+}
+
+void State::Start()
+{
+	if (started)
+	{
+		return;
+	}
+
+	LoadAssets();
+	for (auto& go : objectArray)
+	{
+		go->Start();
+	}
+	started = true;
 }
 
 bool State::QuitRequested()
@@ -47,15 +66,9 @@ void State::Update(float dt)
 	auto& input = InputManager::GetInstance();
 	quitRequested = input.QuitRequested() || input.IsKeyDown(ESCAPE_KEY);
 
-	if (input.KeyPress(SPACE_KEY))
+	for (size_t i = 0; i < objectArray.size(); ++i)
 	{
-		const auto objPos = Vec2(200.f, 0.f).RotateD((rand() % 1440) / 4.f) + Vec2(float(input.GetMouseX()) , float(input.GetMouseY()));
-		AddObject(int(objPos.x), int(objPos.y));
-	}
-
-	for (auto& go : objectArray)
-	{
-		go->Update(dt);
+		objectArray[i]->Update(dt);
 	}
 	for (int i = objectArray.size() - 1; i >= 0; i--)
 	{
@@ -74,12 +87,34 @@ void State::Render()
 	}
 }
 
-void State::AddObject(int mouseX, int mouseY)
+//void State::AddObject(int mouseX, int mouseY)
+//{
+//	auto go = new GameObject();
+//	go->AddComponent(new Sprite(*go, "assets/img/penguinface.png"));
+//	go->Box.CenterAt(mouseX + Camera::pos.x, mouseY + Camera::pos.y);
+//	go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
+//	go->AddComponent(new Face(*go));
+//	objectArray.emplace_back(go);
+//}
+
+std::weak_ptr<GameObject> State::AddObject(GameObject* go)
 {
-	auto go = new GameObject();
-	go->AddComponent(new Sprite(*go, "assets/img/penguinface.png"));
-	go->Box.CenterAt(mouseX + Camera::pos.x, mouseY + Camera::pos.y);
-	go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
-	go->AddComponent(new Face(*go));
 	objectArray.emplace_back(go);
+	if (started)
+	{
+		go->Start();
+	}
+	return objectArray.back();
+}
+
+std::weak_ptr<GameObject> State::GetObjectPointer(GameObject* go)
+{
+	for (auto& ptr : objectArray)
+	{
+		if (ptr.get() == go)
+		{
+			return ptr;
+		}
+	}
+	return std::weak_ptr<GameObject>();
 }

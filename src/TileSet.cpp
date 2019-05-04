@@ -23,7 +23,7 @@ void TileSet::RenderTile(unsigned index, float x, float y)
 	const int srcY = row * tileHeight;
 	const int srcX = col * tileWidth;
 	tileSet.SetClip(srcX, srcY, tileWidth, tileHeight);
-	tileSet.Render(int(x), int(y));
+	tileSet.Render(int(x), int(y), tileWidth, tileHeight);
 }
 
 int TileSet::GetTileWidth() const

@@ -44,9 +44,6 @@
     <ClCompile Include="src\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Face.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TileSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,6 +60,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CameraFollower.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Alien.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Minion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,9 +103,6 @@
     <ClInclude Include="include\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Face.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\TileSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -116,6 +119,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\CameraFollower.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Alien.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Minion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

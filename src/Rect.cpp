@@ -21,10 +21,15 @@ Vec2 Rect::Center() const
 	return Vec2(x + (w / 2.f), y + (h / 2.f));
 }
 
-void Rect::CenterAt(int cx, int cy)
+void Rect::CenterAt(float cx, float cy)
 {
 	x = cx - w / 2.0f;
 	y = cy - h / 2.0f;
+}
+
+void Rect::CenterAt(Vec2 pos)
+{
+	CenterAt(pos.x, pos.y);
 }
 
 float Rect::operator-(const Rect & rhs) const
