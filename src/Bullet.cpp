@@ -5,7 +5,7 @@
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance,	const std::string& sprite)
 	: Component(associated), distanceLeft(maxDistance), damage(damage)
 {
-	associated.AddComponent(new Sprite(associated, sprite));
+	associated.AddComponent(new Sprite(associated, sprite, 3, 0.1));
 	this->speed = Vec2(speed, 0).RotateR(angle);
 	associated.AngleDeg = Utils::Rad2Deg(angle);
 }

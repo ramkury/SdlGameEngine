@@ -7,7 +7,7 @@ class Sprite : public Component
 {
 public:
 	Sprite(GameObject& associated);
-	Sprite(GameObject& associated, std::string file);
+	Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1);
 	~Sprite();
 	void Open(std::string file);
 	void SetClip(int x, int y, int w, int h);
@@ -22,12 +22,23 @@ public:
 
 	void SetScale(float scaleX, float scaleY);
 	Vec2 GetScale() const;
+
+	void SetFrame(int frame);
+	void SetFrameCount(int frameCount);
+	void SetFrameTime(float frameTime);
 	
 private:
+	void clipFrame();
+
 	SDL_Texture* texture;
 	int width;
 	int height;
 	SDL_Rect clipRect;
 	Vec2 scale = { 1, 1 };
+	int frameCount = 0;
+	int currentFrame = 0;
+	float timeElapsed = 0;
+	float frameTime = 0;
+	int frameWidth = 0;
 };
 

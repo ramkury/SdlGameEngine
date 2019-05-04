@@ -22,7 +22,7 @@ void Minion::Shoot(Vec2 target) const
 {
 	const auto angle = (target - associated.Box.Center()).AngleR();
 	auto go = new GameObject();
-	go->AddComponent(new Bullet(*go, angle, 600.f, 10, 2000.f, "assets/img/minionbullet1.png"));
+	go->AddComponent(new Bullet(*go, angle, 300.f, 10, 2000.f, "assets/img/minionbullet2.png"));
 	go->Box.CenterAt(associated.Box.Center());
 	Game::GetInstance().GetState()->AddObject(go);
 }
