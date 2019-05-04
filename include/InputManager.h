@@ -8,6 +8,7 @@
 #define ESCAPE_KEY         SDLK_ESCAPE
 #define LEFT_MOUSE_BUTTON  SDL_BUTTON_LEFT 
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
+#include "Vec2.h"
 
 class InputManager
 {
@@ -25,6 +26,7 @@ public:
 	int GetMouseY();
 	int GetMouseMapX() const;
 	int GetMouseMapY() const;
+	Vec2 GetMouseMapPosition() const;
 
 	bool QuitRequested();
 

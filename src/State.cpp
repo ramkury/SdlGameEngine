@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 #include "Alien.h"
+#include "PenguinBody.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")
@@ -27,6 +28,11 @@ State::State() :
 	alien->Box.CenterAt(512, 300);
 	objectArray.emplace_back(alien);
 
+	auto penguin = new GameObject();
+	penguin->AddComponent(new PenguinBody(*penguin));
+	penguin->Box.CenterAt(100	, 100);
+	objectArray.emplace_back(penguin);
+
 	music.Play();
 }
 
@@ -43,9 +49,9 @@ void State::Start()
 	}
 
 	LoadAssets();
-	for (auto& go : objectArray)
+	for (size_t i = 0; i < objectArray.size(); i++)
 	{
-		go->Start();
+		objectArray[i]->Start();
 	}
 	started = true;
 }
