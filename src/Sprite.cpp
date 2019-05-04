@@ -71,5 +71,5 @@ void Sprite::Update(float dt)
 
 bool Sprite::Is(const std::string& type)
 {
-	return type == "sprite";
+	return type == "Sprite";
 }

@@ -13,8 +13,10 @@ GameObject::~GameObject()
 
 void GameObject::Start()
 {
-	if (started) 
+	if (started)
+	{
 		return;
+	}
 
 	for (auto& c : components)
 	{
@@ -26,9 +28,9 @@ void GameObject::Start()
 
 void GameObject::Update(float dt)
 {
-	for (auto& c : components)
+	for (size_t i = 0; i < components.size(); ++i)
 	{
-		c->Update(dt);
+		components[i]->Update(dt);
 	}
 }
 

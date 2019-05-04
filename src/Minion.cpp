@@ -1,6 +1,8 @@
 #include "Minion.h"
 #include "Sprite.h"
 #include "Utils.h"
+#include "Game.h"
+#include "Bullet.h"
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) 
 	: Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg)
@@ -10,12 +12,16 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
 
 bool Minion::Is(const std::string& type)
 {
-	return type == "minion";
+	return type == "Minion";
 }
 
-void Minion::Shoot(Vec2 target)
+void Minion::Shoot(Vec2 target) const
 {
-
+	const auto angle = (target - associated.Box.Center()).AngleR();
+	auto go = new GameObject();
+	go->AddComponent(new Bullet(*go, angle, 600.f, 10, 2000.f, "assets/img/minionbullet1.png"));
+	go->Box.CenterAt(associated.Box.Center());
+	Game::GetInstance().GetState()->AddObject(go);
 }
 
 void Minion::Update(float dt)

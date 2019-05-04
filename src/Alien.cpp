@@ -64,7 +64,7 @@ void Alien::Update(float dt)
 			speed = (currentTask.pos - associated.Box.Center()).Norm() * SPEED_MULTIPLIER;
 		}
 		auto movement = speed * dt;
-		if (movement.Abs() >= (associated.Box.Center() - currentTask.pos).Abs())
+		if (movement.Abs() >= associated.Box.Center().Distance(currentTask.pos))
 		{
 			speed = { 0,0 };
 			associated.Box.CenterAt(currentTask.pos);
@@ -79,6 +79,9 @@ void Alien::Update(float dt)
 	}
 	case Action::ActionType::SHOOT:
 	{
+		auto shooter = minionArray[rand() % minionArray.size()].lock();
+		const auto minion = GET_COMPONENT(shooter, Minion);
+		minion->Shoot(currentTask.pos);
 		taskQueue.pop();
 		break;
 	}
@@ -92,5 +95,5 @@ void Alien::Render()
 
 bool Alien::Is(const std::string& type)
 {
-	return type == "alien";
+	return type == "Alien";
 }

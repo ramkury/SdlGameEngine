@@ -5,6 +5,8 @@
 #include "Component.h"
 #include "Rect.h"
 
+#define GET_COMPONENT(GO, TYPE) std::static_pointer_cast<TYPE>(GO->GetComponent(#TYPE))
+
 class Component;
 
 class GameObject
