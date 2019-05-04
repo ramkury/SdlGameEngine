@@ -10,7 +10,7 @@ public:
 	void Run();
 	SDL_Renderer* GetRenderer() const;
 	static Game& GetInstance();
-	State& GetState() const;
+	State* GetState() const;
 	float GetDeltaTime() const;
 private:
 	Game(std::string title, int width, int height);

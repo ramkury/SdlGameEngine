@@ -93,9 +93,9 @@ Game& Game::GetInstance()
 	return *instance;
 }
 
-State & Game::GetState() const
+State* Game::GetState() const
 {
-	return *state;
+	return state;
 }
 
 float Game::GetDeltaTime() const

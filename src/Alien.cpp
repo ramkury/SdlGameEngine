@@ -2,8 +2,12 @@
 #include "Sprite.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "State.h"
+#include "Minion.h"
+#include "Utils.h"
+#include "Game.h"
 
-Alien::Alien(GameObject& associated, int nMinions) : Component(associated)
+Alien::Alien(GameObject& associated, int nMinions) : Component(associated), minionArray(nMinions)
 {
 	associated.AddComponent(new Sprite(associated, "assets/img/alien.png"));
 }
@@ -15,6 +19,17 @@ Alien::~Alien()
 
 void Alien::Start()
 {
+	auto state = Game::GetInstance().GetState();
+	const auto currentGameObject = state->GetObjectPointer(&associated);
+	static const float arcOffsetStep = (2.0f * PI) / minionArray.size();
+	auto arcOffset = 0.f;
+	for (auto& minion : minionArray)
+	{
+		auto go = new GameObject();
+		go->AddComponent(new Minion(*go, currentGameObject, arcOffset));
+		minion = state->AddObject(go);
+		arcOffset += arcOffsetStep;
+	}
 }
 
 void Alien::Update(float dt)
@@ -24,16 +39,16 @@ void Alien::Update(float dt)
 		associated.RequestDelete();
 		return;
 	}
-	const float speedMultiplier = 1000.f;
+	static const auto SPEED_MULTIPLIER = 500.f;
 	auto& input = InputManager::GetInstance();
 	auto& camera = Camera::pos;
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
 	{
-		taskQueue.emplace(Action::ActionType::SHOOT, input.GetMouseMapX(), input.GetMouseMapY());
+		taskQueue.emplace(Action::ActionType::SHOOT, float(input.GetMouseMapX()), float(input.GetMouseMapY()));
 	}
 	if (input.MousePress(RIGHT_MOUSE_BUTTON))
 	{
-		taskQueue.emplace(Action::ActionType::MOVE, input.GetMouseMapX(), input.GetMouseMapY());
+		taskQueue.emplace(Action::ActionType::MOVE, float(input.GetMouseMapX()), float(input.GetMouseMapY()));
 	}
 	if (taskQueue.empty())
 	{
@@ -46,7 +61,7 @@ void Alien::Update(float dt)
 	{
 		if (speed.x == 0 && speed.y == 0)
 		{
-			speed = (currentTask.pos - associated.Box.Center()).Norm() * speedMultiplier;
+			speed = (currentTask.pos - associated.Box.Center()).Norm() * SPEED_MULTIPLIER;
 		}
 		auto movement = speed * dt;
 		if (movement.Abs() >= (associated.Box.Center() - currentTask.pos).Abs())
