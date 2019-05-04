@@ -81,7 +81,19 @@ void Alien::Update(float dt)
 	}
 	case Action::ActionType::SHOOT:
 	{
-		auto shooter = minionArray[rand() % minionArray.size()].lock();
+		float dist = INFINITY;
+		std::shared_ptr<GameObject> shooter;
+		for (auto && minion : minionArray)
+		{
+			const auto currentObject = minion.lock();
+			const auto currentDistance = currentObject->Box.Center().Distance(currentTask.pos);
+			if (currentDistance < dist)
+			{
+				dist = currentDistance;
+				shooter = currentObject;
+			}
+		}
+		
 		const auto minion = GET_COMPONENT(shooter, Minion);
 		minion->Shoot(currentTask.pos);
 		taskQueue.pop();
