@@ -25,6 +25,7 @@ public:
 	std::shared_ptr<Component> GetComponent(const std::string& type);
 
 	Rect Box;
+	double AngleDeg = 0;
 
 private:
 	std::vector<std::shared_ptr<Component>> components;

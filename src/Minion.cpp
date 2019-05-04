@@ -7,7 +7,9 @@
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) 
 	: Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg)
 {
-	associated.AddComponent(new Sprite(associated, "assets/img/minion.png"));
+	auto sprite = new Sprite(associated, "assets/img/minion.png");
+	sprite->SetScale(2, 3);
+	associated.AddComponent(sprite);
 }
 
 bool Minion::Is(const std::string& type)
