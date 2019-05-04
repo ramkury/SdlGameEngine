@@ -83,8 +83,8 @@ bool PenguinBody::Is(const std::string& type)
 
 void PenguinBody::NotifyCollision(GameObject& other)
 {
-	auto bullet = GET_COMPONENT(other, Bullet);
-	if (bullet == nullptr)
+	const auto bullet = GET_COMPONENT(other, Bullet);
+	if (bullet == nullptr || !bullet->targetsPlayer)
 	{
 		return;
 	}
