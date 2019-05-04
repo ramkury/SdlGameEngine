@@ -21,14 +21,14 @@ void Alien::Start()
 {
 	auto state = Game::GetInstance().GetState();
 	const auto currentGameObject = state->GetObjectPointer(&associated);
-	static const float arcOffsetStep = (2.0f * PI) / minionArray.size();
+	static const float ARC_OFFSET_STEP = (2.0f * PI) / minionArray.size();
 	auto arcOffset = 0.f;
 	for (auto& minion : minionArray)
 	{
 		auto go = new GameObject();
 		go->AddComponent(new Minion(*go, currentGameObject, arcOffset));
 		minion = state->AddObject(go);
-		arcOffset += arcOffsetStep;
+		arcOffset += ARC_OFFSET_STEP;
 	}
 }
 
@@ -40,6 +40,8 @@ void Alien::Update(float dt)
 		return;
 	}
 	static const auto SPEED_MULTIPLIER = 500.f;
+	static const auto ANGULAR_SPEED = 10.f; ///> deg / s
+	associated.AngleDeg -= ANGULAR_SPEED * dt;
 	auto& input = InputManager::GetInstance();
 	auto& camera = Camera::pos;
 	if (input.MousePress(LEFT_MOUSE_BUTTON))

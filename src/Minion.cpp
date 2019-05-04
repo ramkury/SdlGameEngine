@@ -8,7 +8,8 @@ Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, fl
 	: Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg)
 {
 	auto sprite = new Sprite(associated, "assets/img/minion.png");
-	sprite->SetScale(2, 3);
+	const auto scale = 1 + (rand() % 50) / 100.f;
+	sprite->SetScale(scale, scale);
 	associated.AddComponent(sprite);
 }
 
@@ -40,6 +41,7 @@ void Minion::Update(float dt)
 	static const Vec2 STARTING_POSITION(200, 0);
 	const auto currentPosition = STARTING_POSITION.RotateR(arc) + alien->Box.Center();
 	associated.Box.CenterAt(currentPosition);
+	associated.AngleDeg = Utils::Rad2Deg(arc);
 }
 
 void Minion::Render()

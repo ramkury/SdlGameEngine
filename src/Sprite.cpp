@@ -80,7 +80,7 @@ void Sprite::SetScale(float scaleX, float scaleY)
 	{
 		scale.x = scaleX;
 		const auto newWidth = width * scaleX;
-		associated.Box.x -= (newWidth - associated.Box.w) / 2;
+		associated.Box.x += (associated.Box.w - newWidth) / 2;
 		associated.Box.w = newWidth;
 	}
 	if (scaleY != 0)
