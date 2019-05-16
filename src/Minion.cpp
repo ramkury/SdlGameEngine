@@ -1,4 +1,5 @@
 #include "Minion.h"
+#include <utility>
 #include "Sprite.h"
 #include "Utils.h"
 #include "Game.h"
@@ -6,7 +7,7 @@
 #include "Collider.h"
 
 Minion::Minion(GameObject& associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDeg) 
-	: Component(associated), alienCenter(alienCenter), arc(arcOffsetDeg)
+	: Component(associated), alienCenter(std::move(alienCenter)), arc(arcOffsetDeg)
 {
 	auto sprite = new Sprite(associated, "assets/img/minion.png");
 	const auto scale = 1 + (rand() % 50) / 100.f;

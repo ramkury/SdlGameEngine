@@ -76,7 +76,7 @@ void State::Update(float dt)
 	auto& input = InputManager::GetInstance();
 	quitRequested = input.QuitRequested() || input.IsKeyDown(ESCAPE_KEY);
 
-	for (size_t i = 0; i < objectArray.size(); i++)
+	for (int i = objectArray.size() - 1; i >= 0; i--)
 	{
 		objectArray[i]->Update(dt);
 	}

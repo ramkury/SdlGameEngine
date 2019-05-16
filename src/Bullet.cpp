@@ -43,11 +43,14 @@ void Bullet::NotifyCollision(GameObject& other)
 		// Do nothing on collision with other bullets
 		return;
 	}
-	if (!targetsPlayer && !GET_COMPONENT(other, Alien))
+	if (targetsPlayer && GET_COMPONENT(other, PenguinBody) != nullptr)
 	{
-		return;
+		associated.RequestDelete();
 	}
-	associated.RequestDelete();
+	if (!targetsPlayer && GET_COMPONENT(other, Alien) != nullptr)
+	{
+		associated.RequestDelete();
+	}
 }
 
 int Bullet::GetDamage() const
