@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "Timer.h"
+
 class PenguinCannon : public Component
 {
 public:
@@ -10,9 +12,10 @@ public:
 	bool Is(const std::string& type) override;
 	void NotifyCollision(GameObject& other) override;
 
-	void Shoot() const;
+	void Shoot();
 private:
 	std::weak_ptr<GameObject> pbody;
 	float angle = 0;
+	Timer timer;
 };
 

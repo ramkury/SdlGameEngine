@@ -60,11 +60,11 @@ void PenguinBody::Update(float dt)
 	}
 	if (input.IsKeyDown(SDLK_a))
 	{
-		angle += ROTATION_SPEED * dt;
+		angle -= ROTATION_SPEED * dt;
 	}
 	if (input.IsKeyDown(SDLK_d))
 	{
-		angle -= ROTATION_SPEED * dt;
+		angle += ROTATION_SPEED * dt;
 	}
 	const auto movement = Vec2(linearSpeed, 0).RotateD(angle) * dt;
 	associated.Box.x += movement.x;

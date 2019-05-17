@@ -40,6 +40,7 @@
     <ClCompile Include="src\State.cpp" />
     <ClCompile Include="src\TileMap.cpp" />
     <ClCompile Include="src\TileSet.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Utils.cpp" />
     <ClCompile Include="src\Vec2.cpp" />
   </ItemGroup>
@@ -51,6 +52,7 @@
     <ClInclude Include="include\CameraFollower.h" />
     <ClInclude Include="include\Collider.h" />
     <ClInclude Include="include\Component.h" />
+    <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\InputManager.h" />
@@ -65,6 +67,7 @@
     <ClInclude Include="include\State.h" />
     <ClInclude Include="include\TileMap.h" />
     <ClInclude Include="include\TileSet.h" />
+    <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Utils.h" />
     <ClInclude Include="include\Vec2.h" />
     <ClInclude Include="resource.h" />

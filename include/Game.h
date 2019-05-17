@@ -6,6 +6,7 @@
 class Game
 {
 public:
+	Game(const Game&) = delete;
 	~Game();
 	void Run();
 	SDL_Renderer* GetRenderer() const;
