@@ -19,7 +19,7 @@ public:
 	// Methods
 	float Abs() const;
 	Vec2 Norm() const;
-	float Distance(Vec2& other) const;
+	float DistanceTo(Vec2& other) const;
 	float AngleR() const;
 	float AngleD() const;
 	Vec2 RotateR(float radians) const;

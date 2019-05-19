@@ -52,9 +52,9 @@ Vec2 Vec2::Norm() const
 	return abs == 0 ? *this : Vec2(x / abs, y / abs);
 }
 
-float Vec2::Distance(Vec2 & other) const
+float Vec2::DistanceTo(Vec2 & other) const
 {
-	return (*this - other).Abs();
+	return (other - *this).Abs();
 }
 
 float Vec2::AngleR() const
@@ -82,5 +82,4 @@ Vec2 Vec2::RotateD(float degrees) const
 {
 	return RotateR(Utils::Deg2Rad(degrees));
 }
-
 

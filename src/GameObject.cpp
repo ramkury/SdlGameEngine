@@ -28,7 +28,7 @@ void GameObject::Start()
 
 void GameObject::Update(float dt)
 {
-	for (size_t i = 0; i < components.size(); ++i)
+	for (int i = components.size() - 1; i >= 0; i--)
 	{
 		components[i]->Update(dt);
 	}
@@ -72,6 +72,14 @@ void GameObject::RemoveComponent(Component * cpt)
 			components.erase(iter);
 			break;
 		}
+	}
+}
+
+void GameObject::NotifyCollision(GameObject& other)
+{
+	for (size_t i = 0; i < components.size(); ++i)
+	{
+		components[i]->NotifyCollision(other);
 	}
 }
 

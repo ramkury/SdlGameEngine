@@ -95,6 +95,11 @@ int InputManager::GetMouseMapY() const
 	return mouseY + int(Camera::pos.y);
 }
 
+Vec2 InputManager::GetMouseMapPosition() const
+{
+	return Vec2(float(mouseX), float(mouseY)) + Camera::pos;
+}
+
 bool InputManager::QuitRequested()
 {
 	return quitRequested;

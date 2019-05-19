@@ -21,6 +21,8 @@ void Camera::Update(float dt)
 	if (focus)
 	{
 		pos = focus->Box.Center();
+		pos.x -= float(1024) / 2;
+		pos.y -= float(600) / 2;
 	}
 	else
 	{
@@ -45,4 +47,9 @@ void Camera::Update(float dt)
 		}
 		pos += speed * dt;
 	}
+}
+
+GameObject* Camera::GetFocus()
+{
+	return focus;
 }

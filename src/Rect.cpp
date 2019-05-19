@@ -32,6 +32,12 @@ void Rect::CenterAt(Vec2 pos)
 	CenterAt(pos.x, pos.y);
 }
 
+void Rect::Translate(Vec2 movement)
+{
+	x += movement.x;
+	y += movement.y;
+}
+
 float Rect::operator-(const Rect & rhs) const
 {
 	return (Center() - rhs.Center()).Abs();
