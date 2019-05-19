@@ -9,11 +9,13 @@ Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr)
 {
 }
 
-Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime) : Sprite(associated)
+Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Sprite(associated)
 {
+	this->secondsToSelfDestruct = secondsToSelfDestruct;
 	Open(file);
 	SetFrameCount(frameCount);
 	SetFrameTime(frameTime);
+	clipFrame();
 }
 
 
@@ -69,6 +71,15 @@ bool Sprite::IsOpen() const
 
 void Sprite::Update(float dt)
 {
+	if (secondsToSelfDestruct > 0)
+	{
+		selfDestructCount.Update(dt);
+		if (selfDestructCount.Get() >= secondsToSelfDestruct)
+		{
+			associated.RequestDelete();
+		}
+	}
+
 	timeElapsed += dt;
 	if (timeElapsed >= frameTime)
 	{

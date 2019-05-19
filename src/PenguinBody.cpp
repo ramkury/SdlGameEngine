@@ -6,6 +6,7 @@
 #include "Collider.h"
 #include "Camera.h"
 #include "Bullet.h"
+#include "Sound.h"
 
 PenguinBody* PenguinBody::player;
 
@@ -33,8 +34,7 @@ void PenguinBody::Update(float dt)
 {
 	if (hp <= 0)
 	{
-		associated.RequestDelete();
-		Camera::Unfollow();
+		Die();
 		return;
 	}
 
@@ -89,4 +89,27 @@ void PenguinBody::NotifyCollision(GameObject& other)
 		return;
 	}
 	hp -= bullet->GetDamage();
+}
+
+Vec2 PenguinBody::GetPosition() const
+{
+	return associated.Box.Center();
+}
+
+void PenguinBody::Die()
+{
+	if (Camera::GetFocus() == &associated)
+	{
+		Camera::Unfollow();
+	}
+
+	auto explosion = new GameObject();
+	explosion->AddComponent(new Sprite(*explosion, "assets/img/penguindeath.png", 5, 0.2, 1));
+	auto sound = new Sound(*explosion, "assets/audio/boom.wav");
+	explosion->AddComponent(sound);
+	sound->Play();
+	explosion->Box.CenterAt(associated.Box.Center());
+	Game::GetInstance().GetState()->AddObject(explosion);
+
+	associated.RequestDelete();
 }

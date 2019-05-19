@@ -1,6 +1,5 @@
 #include "Alien.h"
 #include "Sprite.h"
-#include "InputManager.h"
 #include "Camera.h"
 #include "State.h"
 #include "Minion.h"
@@ -8,9 +7,15 @@
 #include "Game.h"
 #include "Collider.h"
 #include "Bullet.h"
+#include "Constants.h"
+#include "PenguinBody.h"
+#include "Sound.h"
+
+int Alien::alienCount = 0;
 
 Alien::Alien(GameObject& associated, int nMinions) : Component(associated), minionArray(nMinions)
 {
+	alienCount++;
 	associated.AddComponent(new Sprite(associated, "assets/img/alien.png"));
 	associated.AddComponent(new Collider(associated));
 }
@@ -18,6 +23,7 @@ Alien::Alien(GameObject& associated, int nMinions) : Component(associated), mini
 Alien::~Alien()
 {
 	minionArray.clear();
+	alienCount--;
 }
 
 void Alien::Start()
@@ -39,70 +45,47 @@ void Alien::Update(float dt)
 {
 	if (hp <= 0)
 	{
-		associated.RequestDelete();
+		Die();
 		return;
 	}
-	static const auto SPEED_MULTIPLIER = 500.f;
-	static const auto ANGULAR_SPEED = 10.f; ///> deg / s
-	associated.AngleDeg -= ANGULAR_SPEED * dt;
-	auto& input = InputManager::GetInstance();
-	auto& camera = Camera::pos;
-	if (input.MousePress(LEFT_MOUSE_BUTTON))
-	{
-		taskQueue.emplace(Action::ActionType::SHOOT, float(input.GetMouseMapX()), float(input.GetMouseMapY()));
-	}
-	if (input.MousePress(RIGHT_MOUSE_BUTTON))
-	{
-		taskQueue.emplace(Action::ActionType::MOVE, float(input.GetMouseMapX()), float(input.GetMouseMapY()));
-	}
-	if (taskQueue.empty())
+
+	associated.AngleDeg -= Constants::Alien::ROTATION_SPEED * dt;
+
+	if (PenguinBody::player == nullptr)
 	{
 		return;
 	}
-	auto& currentTask = taskQueue.front();
-	switch (currentTask.type)
+
+	switch (state)
 	{
-	case Action::ActionType::MOVE:
-	{
-		if (speed.x == 0 && speed.y == 0)
+	case MOVING:
 		{
-			speed = (currentTask.pos - associated.Box.Center()).Norm() * SPEED_MULTIPLIER;
-		}
-		auto movement = speed * dt;
-		if (movement.Abs() >= associated.Box.Center().Distance(currentTask.pos))
-		{
-			speed = { 0,0 };
-			associated.Box.CenterAt(currentTask.pos);
-			taskQueue.pop();
-		}
-		else
-		{
-			associated.Box.x += movement.x;
-			associated.Box.y += movement.y;
-		}
-		break;
-	}
-	case Action::ActionType::SHOOT:
-	{
-		float dist = INFINITY;
-		std::shared_ptr<GameObject> shooter;
-		for (auto && minion : minionArray)
-		{
-			const auto currentObject = minion.lock();
-			const auto currentDistance = currentObject->Box.Center().Distance(currentTask.pos);
-			if (currentDistance < dist)
+			if (associated.Box.Center().DistanceTo(destination) <= speed.Abs() * dt)
 			{
-				dist = currentDistance;
-				shooter = currentObject;
+				// Reached the destination
+				associated.Box.CenterAt(destination);
+				Shoot(PenguinBody::player->GetPosition());
+				restTimer.Restart();
+				state = RESTING;
 			}
+			else
+			{
+				associated.Box.Translate(speed * dt);
+			}
+			break;
 		}
-		
-		const auto minion = GET_COMPONENT(*shooter, Minion);
-		minion->Shoot(currentTask.pos);
-		taskQueue.pop();
-		break;
-	}
-	default: taskQueue.pop();
+	case RESTING:
+		{
+			restTimer.Update(dt);
+			if (restTimer.Get() >= Constants::Alien::REST_TIME)
+			{
+				destination = PenguinBody::player->GetPosition();
+				speed = (destination - associated.Box.Center()).Norm() * Constants::Alien::MOVEMENT_SPEED;
+				state = MOVING;
+			}
+			break;
+		};
+	default: break;
 	}
 }
 
@@ -117,10 +100,42 @@ bool Alien::Is(const std::string& type)
 
 void Alien::NotifyCollision(GameObject& other)
 {
-	auto bullet = GET_COMPONENT(other, Bullet);
-	if (bullet == nullptr)
+	const auto bullet = GET_COMPONENT(other, Bullet);
+	if (bullet == nullptr || bullet->targetsPlayer)
 	{
 		return;
 	}
 	hp -= bullet->GetDamage();
+}
+
+void Alien::Shoot(Vec2 target)
+{
+	float dist = INFINITY;
+	std::shared_ptr<GameObject> shooter;
+	for (auto && minion : minionArray)
+	{
+		const auto currentObject = minion.lock();
+		const auto currentDistance = currentObject->Box.Center().DistanceTo(target);
+		if (currentDistance < dist)
+		{
+			dist = currentDistance;
+			shooter = currentObject;
+		}
+	}
+
+	const auto minion = GET_COMPONENT(*shooter, Minion);
+	minion->Shoot(target);
+}
+
+void Alien::Die()
+{
+	auto explosion = new GameObject();
+	explosion->AddComponent(new Sprite(*explosion, "assets/img/aliendeath.png", 4, 0.25, 1));
+	auto sound = new Sound(*explosion, "assets/audio/boom.wav");
+	explosion->AddComponent(sound);
+	sound->Play();
+	explosion->Box.CenterAt(associated.Box.Center());
+	Game::GetInstance().GetState()->AddObject(explosion);
+
+	associated.RequestDelete();
 }

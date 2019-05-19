@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include <queue>
+#include "Timer.h"
 
 class Alien : public Component
 {
@@ -13,25 +14,21 @@ public:
 	void Render() override;
 	bool Is(const std::string& type) override;
 	void NotifyCollision(GameObject& other) override;
+	
+	static int alienCount;
 private:
-	class Action
+	enum AlienState
 	{
-	public:
-		enum class ActionType
-		{
-			MOVE,
-			SHOOT
-		};
-
-		Action(ActionType type, float x, float y) : type(type), pos(x, y) {};
-		ActionType type;
-		Vec2 pos;
+		MOVING,
+		RESTING
 	};
-
+	AlienState state = RESTING;
+	Timer restTimer;
+	Vec2 destination;
 	Vec2 speed;
 	int hp = 30;
-
-	std::queue<Action> taskQueue;
 	std::vector<std::weak_ptr<GameObject>> minionArray;
+	void Shoot(Vec2 target);
+	void Die();
 };
 

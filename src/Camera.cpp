@@ -48,3 +48,8 @@ void Camera::Update(float dt)
 		pos += speed * dt;
 	}
 }
+
+GameObject* Camera::GetFocus()
+{
+	return focus;
+}

@@ -18,4 +18,5 @@ public:
 	Vec2 Center() const;
 	void CenterAt(float cx, float cy);
 	void CenterAt(Vec2 pos);
+	void Translate(Vec2 movement);
 };
