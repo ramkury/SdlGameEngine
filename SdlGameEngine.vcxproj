@@ -45,12 +45,12 @@
     <ClCompile Include="src\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Collision.h" />
     <ClInclude Include="include\Alien.h" />
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CameraFollower.h" />
     <ClInclude Include="include\Collider.h" />
+    <ClInclude Include="include\Collision.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Game.h" />
@@ -70,10 +70,6 @@
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Utils.h" />
     <ClInclude Include="include\Vec2.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SdlGameEngine.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

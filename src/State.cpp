@@ -9,7 +9,7 @@
 #include "Alien.h"
 #include "PenguinBody.h"
 #include "Collider.h"
-#include "../Collision.h"
+#include "Collision.h"
 
 State::State() :
 	music("assets/audio/stageState.ogg")

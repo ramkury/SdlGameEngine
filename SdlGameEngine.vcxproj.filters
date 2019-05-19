@@ -145,16 +145,10 @@
     <ClInclude Include="include\PenguinBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PenguinCannon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Collider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Timer.h">
@@ -163,8 +157,8 @@
     <ClInclude Include="include\Constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SdlGameEngine.rc" />
+    <ClInclude Include="include\Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
