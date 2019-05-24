@@ -3,25 +3,25 @@
 #include "GameObject.h"
 #include <vector>
 #include <memory>
+#include "State.h"
 
-class StageState
+class StageState : public State
 {
 public:
 	StageState();
+	StageState(const StageState& other) = delete;
 	~StageState();
-	void Start();
-	bool QuitRequested();
-	void LoadAssets();
-	void Update(float dt);
-	void Render();
-	std::weak_ptr<GameObject> AddObject(GameObject* go);
-	std::weak_ptr<GameObject> GetObjectPointer(GameObject* go);
 
+	void LoadAssets() override;
+	void Update(float dt) override;
+	void Render() override;
+	
+	void Start() override;
+	void Pause() override;
+	void Resume() override;
 
 private:
-	Music music;
-	bool quitRequested = false;
+	Music backgroundMusic;
 	bool started = false;
-	std::vector<std::shared_ptr<GameObject>> objectArray;
 };
 

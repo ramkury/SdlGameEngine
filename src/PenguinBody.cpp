@@ -24,10 +24,10 @@ PenguinBody::~PenguinBody()
 
 void PenguinBody::Start()
 {
-	const auto state = Game::GetInstance().GetState();
+	auto& state = Game::GetInstance().GetCurrentState();
 	auto go = new GameObject();
-	go->AddComponent(new PenguinCannon(*go, state->GetObjectPointer(&associated)));
-	pcannon = state->AddObject(go);
+	go->AddComponent(new PenguinCannon(*go, state.GetObjectPtr(&associated)));
+	pcannon = state.AddObject(go);
 }
 
 void PenguinBody::Update(float dt)
@@ -109,7 +109,7 @@ void PenguinBody::Die()
 	explosion->AddComponent(sound);
 	sound->Play();
 	explosion->Box.CenterAt(associated.Box.Center());
-	Game::GetInstance().GetState()->AddObject(explosion);
+	Game::GetInstance().GetCurrentState().AddObject(explosion);
 
 	associated.RequestDelete();
 }

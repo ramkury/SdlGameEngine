@@ -28,15 +28,15 @@ Alien::~Alien()
 
 void Alien::Start()
 {
-	auto state = Game::GetInstance().GetState();
-	const auto currentGameObject = state->GetObjectPointer(&associated);
+	auto& state = Game::GetInstance().GetCurrentState();
+	const auto currentGameObject = state.GetObjectPtr(&associated);
 	static const float ARC_OFFSET_STEP = (2.0f * PI) / minionArray.size();
 	auto arcOffset = 0.f;
 	for (auto& minion : minionArray)
 	{
 		auto go = new GameObject();
 		go->AddComponent(new Minion(*go, currentGameObject, arcOffset));
-		minion = state->AddObject(go);
+		minion = state.AddObject(go);
 		arcOffset += ARC_OFFSET_STEP;
 	}
 }
@@ -135,7 +135,7 @@ void Alien::Die()
 	explosion->AddComponent(sound);
 	sound->Play();
 	explosion->Box.CenterAt(associated.Box.Center());
-	Game::GetInstance().GetState()->AddObject(explosion);
+	Game::GetInstance().GetCurrentState().AddObject(explosion);
 
 	associated.RequestDelete();
 }

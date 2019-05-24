@@ -39,15 +39,10 @@ bool State::QuitRequested() const
 
 void State::StartArray()
 {
-	if (started)
-	{
-		return;
-	}
 	for (auto && object : objectArray)
 	{
 		object->Start();
 	}
-	started = true;
 }
 
 void State::UpdateArray(float dt)
@@ -67,8 +62,8 @@ void State::UpdateArray(float dt)
 
 void State::RenderArray()
 {
-	for (auto&& object : objectArray)
+	for (size_t i = 0; i < objectArray.size(); i++)
 	{
-		object->Render();
+		objectArray[i]->Render();
 	}
 }

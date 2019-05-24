@@ -31,7 +31,7 @@ void Minion::Shoot(Vec2 target) const
 	auto go = new GameObject();
 	go->AddComponent(new Bullet(*go, angle, 300.f, 10, 2000.f, "assets/img/minionbullet2.png", true));
 	go->Box.CenterAt(associated.Box.Center());
-	Game::GetInstance().GetState()->AddObject(go);
+	Game::GetInstance().GetCurrentState().AddObject(go);
 }
 
 void Minion::Update(float dt)

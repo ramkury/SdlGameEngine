@@ -12,7 +12,7 @@
 #include "Collision.h"
 
 StageState::StageState() :
-	music("assets/audio/stageState.ogg")
+	backgroundMusic("assets/audio/stageState.ogg")
 {
 	auto background = new GameObject();
 	background->AddComponent(new Sprite(*background, "assets/img/ocean.jpg"));
@@ -37,7 +37,7 @@ StageState::StageState() :
 
 	Camera::Follow(penguin);
 
-	music.Play();
+	backgroundMusic.Play();
 }
 
 StageState::~StageState()
@@ -45,25 +45,6 @@ StageState::~StageState()
 	objectArray.clear();
 }
 
-void StageState::Start()
-{
-	if (started)
-	{
-		return;
-	}
-
-	LoadAssets();
-	for (size_t i = 0; i < objectArray.size(); i++)
-	{
-		objectArray[i]->Start();
-	}
-	started = true;
-}
-
-bool StageState::QuitRequested()
-{
-	return quitRequested;
-}
 
 void StageState::LoadAssets()
 {
@@ -76,17 +57,8 @@ void StageState::Update(float dt)
 	auto& input = InputManager::GetInstance();
 	quitRequested = input.QuitRequested() || input.IsKeyDown(ESCAPE_KEY);
 
-	for (int i = objectArray.size() - 1; i >= 0; i--)
-	{
-		objectArray[i]->Update(dt);
-	}
-	for (int i = objectArray.size() - 1; i >= 0; i--)
-	{
-		if (objectArray[i]->IsDead())
-		{
-			objectArray.erase(objectArray.begin() + i);
-		}
-	}
+	UpdateArray(dt);
+
 	for (size_t i = 0; i < objectArray.size(); i++)
 	{
 		for (size_t j = i + 1; j < objectArray.size(); j++)
@@ -114,40 +86,24 @@ void StageState::Update(float dt)
 
 void StageState::Render()
 {
-	for (auto& go : objectArray)
-	{
-		go->Render();
-	}
+	RenderArray();
 }
 
-//void StageState::AddObject(int mouseX, int mouseY)
-//{
-//	auto go = new GameObject();
-//	go->AddComponent(new Sprite(*go, "assets/img/penguinface.png"));
-//	go->Box.CenterAt(mouseX + Camera::pos.x, mouseY + Camera::pos.y);
-//	go->AddComponent(new Sound(*go, "assets/audio/boom.wav"));
-//	go->AddComponent(new Face(*go));
-//	objectArray.emplace_back(go);
-//}
-
-std::weak_ptr<GameObject> StageState::AddObject(GameObject* go)
+void StageState::Start()
 {
-	objectArray.emplace_back(go);
 	if (started)
 	{
-		go->Start();
+		return;
 	}
-	return objectArray.back();
+	LoadAssets();
+	StartArray();
+	started = true;
 }
 
-std::weak_ptr<GameObject> StageState::GetObjectPointer(GameObject* go)
+void StageState::Pause()
 {
-	for (auto& ptr : objectArray)
-	{
-		if (ptr.get() == go)
-		{
-			return ptr;
-		}
-	}
-	return std::weak_ptr<GameObject>();
+}
+
+void StageState::Resume()
+{
 }

@@ -2,6 +2,8 @@
 #include <string>
 #include "SDL2/SDL.h"
 #include "StageState.h"
+#include "State.h"
+#include <stack>
 
 class Game
 {
@@ -11,14 +13,16 @@ public:
 	void Run();
 	SDL_Renderer* GetRenderer() const;
 	static Game& GetInstance();
-	StageState* GetState() const;
+	State& GetCurrentState() const;
+	void Push(State* state);
 	float GetDeltaTime() const;
 private:
 	Game(std::string title, int width, int height);
 	static Game* instance;
-	SDL_Window* window;
-	SDL_Renderer* renderer;
-	StageState* state;
+	SDL_Window* window = nullptr;
+	SDL_Renderer* renderer = nullptr;
+	State* storedState = nullptr;
+	std::stack<std::unique_ptr<State>> stateStack;
 	unsigned frameStart = 0;
 	float dt = 0.f;
 	void CalculateDeltaTime();

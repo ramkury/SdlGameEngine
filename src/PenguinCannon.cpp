@@ -58,6 +58,6 @@ void PenguinCannon::Shoot()
 	auto go = new GameObject();
 	go->AddComponent(new Bullet(*go, Utils::Deg2Rad(angle), 300.f, 10, 2000.f, "assets/img/minionbullet2.png", false));
 	go->Box.CenterAt(Vec2(60, 0).RotateD(angle) + associated.Box.Center());
-	Game::GetInstance().GetState()->AddObject(go);
+	Game::GetInstance().GetCurrentState().AddObject(go);
 	timer.Restart();
 }
