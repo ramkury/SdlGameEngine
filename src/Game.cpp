@@ -39,7 +39,7 @@ Game::Game(std::string title, int width, int height)
 
 	window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	state = new State();
+	state = new StageState();
 }
 
 
@@ -93,7 +93,7 @@ Game& Game::GetInstance()
 	return *instance;
 }
 
-State* Game::GetState() const
+StageState* Game::GetState() const
 {
 	return state;
 }

@@ -1,7 +1,8 @@
 #include "TileSet.h"
+#include <stdexcept>
 
 TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, const std::string& file)
-	: tileSet(associated, file), tileWidth(tileWidth), tileHeight(tileHeight)
+	: tileSet(associated, file), tileWidth(tileWidth), tileHeight(tileHeight), rows(0), columns(0)
 {
 	if (tileSet.IsOpen())
 	{
@@ -12,12 +13,7 @@ TileSet::TileSet(GameObject& associated, int tileWidth, int tileHeight, const st
 
 void TileSet::RenderTile(unsigned index, float x, float y)
 {
-	const bool validIndex = index < unsigned(rows * columns);
-	if (!validIndex)
-	{
-		throw std::runtime_error("Bad index");
-	}
-
+	SDL_assert(index < unsigned(rows * columns));
 	const int row = index / columns;
 	const int col = index % columns;
 	const int srcY = row * tileHeight;

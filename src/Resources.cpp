@@ -1,6 +1,7 @@
 #include "Resources.h"
 #include <SDL2/SDL_image.h>
 #include "Game.h"
+#include <stdexcept>
 
 std::unordered_map<std::string, SDL_Texture*> Resources::imageTable;
 std::unordered_map<std::string, Mix_Music*> Resources::musicTable;

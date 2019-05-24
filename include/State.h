@@ -1,27 +1,36 @@
 #pragma once
-#include "Music.h"
-#include "GameObject.h"
-#include <vector>
 #include <memory>
-
+#include <GameObject.h>
 class State
 {
 public:
-	State();
-	~State();
-	void Start();
-	bool QuitRequested();
-	void LoadAssets();
-	void Update(float dt);
-	void Render();
-	std::weak_ptr<GameObject> AddObject(GameObject* go);
-	std::weak_ptr<GameObject> GetObjectPointer(GameObject* go);
+	State() = default;
+	virtual ~State();
 
+	virtual void LoadAssets() = 0;
+	virtual void Update(float dt) = 0;
+	virtual void Render() = 0;
 
-private:
-	Music music;
+	virtual void Start() = 0;
+	virtual void Pause() = 0;
+	virtual void Resume() = 0;
+
+	virtual std::weak_ptr<GameObject> AddObject(GameObject* object);
+	virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject* object);
+
+	bool PopRequested() const;
+	bool QuitRequested() const;
+
+protected:
+	void StartArray();
+	virtual void UpdateArray(float dt);
+	virtual void RenderArray();
+
+	bool popRequested = false;
 	bool quitRequested = false;
 	bool started = false;
+
 	std::vector<std::shared_ptr<GameObject>> objectArray;
+	
 };
 
