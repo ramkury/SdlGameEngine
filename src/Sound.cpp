@@ -6,7 +6,7 @@ Sound::Sound(GameObject & associated) : Component(associated), chunk(nullptr)
 {
 }
 
-Sound::Sound(GameObject & associated, std::string file) : Sound(associated)
+Sound::Sound(GameObject & associated, const std::string& file) : Sound(associated)
 {
 	Open(file);
 }
@@ -31,7 +31,7 @@ void Sound::Stop()
 	}
 }
 
-void Sound::Open(std::string file)
+void Sound::Open(const std::string& file)
 {
 	chunk = Resources::GetSound(file);
 }

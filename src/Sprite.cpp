@@ -9,7 +9,7 @@ Sprite::Sprite(GameObject& associated) : Component(associated), texture(nullptr)
 {
 }
 
-Sprite::Sprite(GameObject& associated, std::string file, int frameCount, float frameTime, float secondsToSelfDestruct) : Sprite(associated)
+Sprite::Sprite(GameObject& associated, const std::string& file, int frameCount, float frameTime, float secondsToSelfDestruct) : Sprite(associated)
 {
 	this->secondsToSelfDestruct = secondsToSelfDestruct;
 	Open(file);
@@ -23,7 +23,7 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::Open(std::string file)
+void Sprite::Open(const std::string& file)
 {	
 	texture = Resources::GetImage(file);
 

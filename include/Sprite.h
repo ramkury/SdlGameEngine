@@ -8,9 +8,9 @@ class Sprite : public Component
 {
 public:
 	Sprite(GameObject& associated);
-	Sprite(GameObject& associated, std::string file, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
+	Sprite(GameObject& associated, const std::string& file, int frameCount = 1, float frameTime = 1, float secondsToSelfDestruct = 0);
 	~Sprite();
-	void Open(std::string file);
+	void Open(const std::string& file);
 	void SetClip(int x, int y, int w, int h);
 	void Render() override;
 	void Render(int x, int y, int w, int h) const;
